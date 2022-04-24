@@ -1,0 +1,21 @@
+{
+  "name": "obrn1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "install-all": "npm run install-client && npm run install-server",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "build-all": "npm run build-server && npm run build-client",
+    "build-server": "cd server && npm run build",
+    "build-client": "cd client && npm run build",
+    "build": "npm run build-all",
+    "install": "npm run install-all",
+    "editor": "cd client && npm run editor",
+    "editor-remote": "cd client && npm run editor-remote"
+  },
+  "author": "Dru Erridge",
+  "license": ""
+}
