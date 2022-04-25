@@ -1,0 +1,18 @@
+{
+    "id": "85658913-08cc-4a54-84f0-cbfdb5160dc8",
+    "sceneType": "SCENE",
+    "settings": {
+        "preloadPackFiles": [],
+        "createMethodName": "editorCreate",
+        "sceneKey": "CharacterTest",
+        "compilerOutputLanguage": "TYPE_SCRIPT"
+    },
+    "displayList": [],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor 2D - Scene Editor",
+        "url": "https://phasereditor2d.com",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 3
+    }
+}

@@ -2,6 +2,24 @@
     "section1": {
         "files": [
             {
+                "url": "assets/characters/black-mage.png",
+                "frameConfig": {
+                    "frameWidth": 16,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "black-mage"
+            },
+            {
+                "url": "assets/characters/black-mage.json",
+                "type": "animation",
+                "key": "black-mage"
+            },
+            {
                 "url": "assets/dino.png",
                 "type": "image",
                 "key": "dino"
@@ -12,6 +30,7 @@
         "app": "Phaser Editor 2D - Asset Pack Editor",
         "contentType": "phasereditor2d.pack.core.AssetContentType",
         "url": "https://phasereditor2d.com",
-        "version": 2
+        "version": 2,
+        "showAllFilesInBlocks": false
     }
 }

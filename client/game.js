@@ -3,6 +3,12 @@ window.addEventListener('load', function () {
     var game = new Phaser.Game({
         width: 800,
         height: 600,
+        physics: {
+            default: "arcade",
+            arcade: {
+                debug: false
+            }
+        },
         type: Phaser.AUTO,
         backgroundColor: "#242424",
         scale: {
@@ -74,7 +80,7 @@ class PreloadText extends UserComponent {
         gameObject["__PreloadText"] = this;
         /* START-USER-CTR-CODE */
         this.scene.load.on(Phaser.Loader.Events.PROGRESS, (p) => {
-            this.gameObject.text = (p * 100) + "%";
+            this.gameObject.text = Math.floor(p * 100) + "%";
         });
         /* END-USER-CTR-CODE */
     }
@@ -118,6 +124,81 @@ class PushOnClick extends UserComponent {
 // You can write more code here
 // You can write more code here
 /* START OF COMPILED CODE */
+class Player extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y, texture, frame) {
+        super(scene, x ?? 366, y ?? 169, texture || "black-mage", frame ?? 9);
+        /* START-USER-CTR-CODE */
+        // Write your code here.
+        this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);
+        this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.updatePlayer, this);
+        this.moveTarget = new Phaser.Math.Vector2(this.x, this.y);
+        /* END-USER-CTR-CODE */
+    }
+    /* START-USER-CODE */
+    // Write your code here.
+    moveTarget;
+    maxSpeed = 60;
+    start() {
+        const arcade = this.scene.physics;
+        arcade.add.existing(this);
+    }
+    updatePlayer() {
+        const arcadeBody = this.body;
+        var pointer = this.scene.input.activePointer;
+        if (pointer.isDown) {
+            this.moveTarget = new Phaser.Math.Vector2(pointer.x, pointer.y);
+            this.scene.physics.moveToObject(this, this.moveTarget, this.maxSpeed);
+            if (arcadeBody.velocity.y >= 0) {
+                this.play("walk-down");
+            }
+            else {
+                this.play("walk-up");
+            }
+            if (arcadeBody.velocity.x >= 0) {
+                this.setFlipX(true);
+            }
+            else {
+                this.setFlipX(false);
+            }
+        }
+        var distance = this.moveTarget.distance(this);
+        if (arcadeBody.speed > 0) {
+            if (distance < 4) {
+                if (arcadeBody.velocity.y >= 0) {
+                    this.play("idle-down");
+                }
+                else {
+                    this.play("idle-up");
+                }
+                arcadeBody.reset(this.moveTarget.x, this.moveTarget.y);
+            }
+        }
+    }
+}
+/* END OF COMPILED CODE */
+// You can write more code here
+// You can write more code here
+/* START OF COMPILED CODE */
+class CharacterTest extends Phaser.Scene {
+    constructor() {
+        super("CharacterTest");
+        /* START-USER-CTR-CODE */
+        // Write your code here.
+        /* END-USER-CTR-CODE */
+    }
+    editorCreate() {
+        this.events.emit("scene-awake");
+    }
+    /* START-USER-CODE */
+    // Write your code here
+    create() {
+        this.editorCreate();
+    }
+}
+/* END OF COMPILED CODE */
+// You can write more code here
+// You can write more code here
+/* START OF COMPILED CODE */
 class Level extends Phaser.Scene {
     constructor() {
         super("Level");
@@ -133,6 +214,11 @@ class Level extends Phaser.Scene {
         text_1.setOrigin(0.5, 0);
         text_1.text = "Phaser 3 + Phaser Editor 2D + TypeScript";
         text_1.setStyle({ "fontFamily": "arial", "fontSize": "3em" });
+        // PlayerLayer
+        const playerLayer = this.add.layer();
+        // player
+        const player = new Player(this, 280, 249);
+        playerLayer.add(player);
         // dino (components)
         new PushOnClick(dino);
         this.events.emit("scene-awake");

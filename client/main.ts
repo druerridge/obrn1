@@ -1,9 +1,14 @@
-
 window.addEventListener('load', function () {
 
 	var game = new Phaser.Game({
 		width: 800,
 		height: 600,
+		physics: {
+			default: "arcade",
+			arcade: {
+				debug: false
+			}
+		},
 		type: Phaser.AUTO,
         backgroundColor: "#242424",
 		scale: {

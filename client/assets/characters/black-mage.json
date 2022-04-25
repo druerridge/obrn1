@@ -1,0 +1,125 @@
+{
+    "anims": [
+        {
+            "key": "walk-down",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "black-mage",
+                    "frame": 8,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "black-mage",
+                    "frame": 9,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "black-mage",
+                    "frame": 10,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1,
+            "yoyo": true
+        },
+        {
+            "key": "walk-up",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "black-mage",
+                    "frame": 11,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "black-mage",
+                    "frame": 12,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "black-mage",
+                    "frame": 13,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1,
+            "yoyo": true
+        },
+        {
+            "key": "idle-up",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "black-mage",
+                    "frame": 12,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "idle-down",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "black-mage",
+                    "frame": 9,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "charge-up",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "black-mage",
+                    "frame": 1,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "charge-down",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "black-mage",
+                    "frame": 0,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        }
+    ],
+    "globalTimeScale": 1,
+    "meta": {
+        "app": "Phaser Editor 2D v3",
+        "contentType": "Phaser v3 Animations"
+    }
+}

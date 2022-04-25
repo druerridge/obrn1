@@ -28,10 +28,30 @@
             "components": [],
             "x": 400,
             "y": 406,
-            "originY": 0,
+            "originX": 0.5,
             "text": "Phaser 3 + Phaser Editor 2D + TypeScript",
             "fontFamily": "arial",
             "fontSize": "3em"
+        },
+        {
+            "type": "Layer",
+            "id": "f713ce72-b039-4d25-b80c-feaa9fbdc655",
+            "label": "PlayerLayer",
+            "components": [],
+            "list": [
+                {
+                    "prefabId": "da95aaad-b84f-4969-b49e-31c7dce3d116",
+                    "id": "68862dab-1f30-4192-9c98-23cb3bf9c056",
+                    "unlock": [
+                        "x",
+                        "y"
+                    ],
+                    "label": "player",
+                    "components": [],
+                    "x": 280,
+                    "y": 249
+                }
+            ]
         }
     ],
     "plainObjects": [],
@@ -39,6 +59,6 @@
         "app": "Phaser Editor 2D - Scene Editor",
         "url": "https://phasereditor2d.com",
         "contentType": "phasereditor2d.core.scene.SceneContentType",
-        "version": 2
+        "version": 3
     }
 }
