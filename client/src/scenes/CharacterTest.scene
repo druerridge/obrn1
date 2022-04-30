@@ -7,8 +7,62 @@
         "sceneKey": "CharacterTest",
         "compilerOutputLanguage": "TYPE_SCRIPT"
     },
-    "displayList": [],
-    "plainObjects": [],
+    "displayList": [
+        {
+            "prefabId": "da95aaad-b84f-4969-b49e-31c7dce3d116",
+            "id": "deabf585-89cc-45c5-a4db-e55ece897ae9",
+            "unlock": [
+                "x",
+                "y"
+            ],
+            "label": "player",
+            "components": [],
+            "x": 400,
+            "y": 300
+        },
+        {
+            "type": "TilemapLayer",
+            "id": "3b0342f3-a5f2-4322-ac04-8aee7ecca13b",
+            "label": "ground_1",
+            "components": [],
+            "tilemapId": "22b29d32-83e3-4e97-8d53-5b10e6271067",
+            "layerName": "Ground",
+            "tilesets": [
+                "hex mini",
+                "hexmini"
+            ]
+        },
+        {
+            "type": "TilemapLayer",
+            "id": "98e073f5-9601-4f3f-b358-0a04c26ff125",
+            "label": "collision_1",
+            "components": [],
+            "tilemapId": "22b29d32-83e3-4e97-8d53-5b10e6271067",
+            "layerName": "Collision",
+            "tilesets": [
+                "hex mini",
+                "hexmini"
+            ]
+        }
+    ],
+    "plainObjects": [
+        {
+            "id": "22b29d32-83e3-4e97-8d53-5b10e6271067",
+            "type": "Tilemap",
+            "label": "hexminiblocking",
+            "key": "hexminiblocking",
+            "tilesets": [
+                {
+                    "name": "hex mini",
+                    "imageKey": "hexmini"
+                },
+                {
+                    "name": "hexmini",
+                    "imageKey": "hexmini"
+                }
+            ]
+        }
+    ],
     "meta": {
         "app": "Phaser Editor 2D - Scene Editor",
         "url": "https://phasereditor2d.com",

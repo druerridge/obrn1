@@ -18,7 +18,8 @@
                 "frame": 9
             },
             "x": 366,
-            "y": 169
+            "y": 169,
+            "originY": 1
         }
     ],
     "plainObjects": [],

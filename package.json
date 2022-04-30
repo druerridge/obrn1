@@ -14,7 +14,8 @@
     "build": "npm run build-all",
     "install": "npm run install-all",
     "editor": "cd client && npm run editor",
-    "editor-remote": "cd client && npm run editor-remote"
+    "editor-remote": "cd client && npm run editor-remote",
+    "watch-client": "cd client && npm run watch"
   },
   "author": "Dru Erridge",
   "license": ""

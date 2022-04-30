@@ -15,35 +15,72 @@ class Level extends Phaser.Scene {
 
 	editorCreate(): void {
 
-		// dino
-		const dino = this.add.image(400, 245.50984430371858, "dino");
+		// hexminiblocking
+		const hexminiblocking = this.add.tilemap("hexminiblocking");
+		hexminiblocking.addTilesetImage("hex mini", "hexmini");
+		hexminiblocking.addTilesetImage("hexmini", "hexmini");
 
-		// text_1
-		const text_1 = this.add.text(400, 406, "", {});
-		text_1.setOrigin(0.5, 0);
-		text_1.text = "Phaser 3 + Phaser Editor 2D + TypeScript";
-		text_1.setStyle({ "fontFamily": "arial", "fontSize": "3em" });
+		// groundLayer
+		const groundLayer = hexminiblocking.createLayer("Ground", ["hexmini"], 0, 0);
+
+		// collisionLayer
+		const collisionLayer = hexminiblocking.createLayer("Collision", ["hexmini"], 0, 0);
 
 		// PlayerLayer
 		const playerLayer = this.add.layer();
 
 		// player
-		const player = new Player(this, 280, 249);
+		const player = new Player(this, 282, 227);
 		playerLayer.add(player);
 
-		// dino (components)
-		new PushOnClick(dino);
+		this.groundLayer = groundLayer;
+		this.collisionLayer = collisionLayer;
+		this.player = player;
+		this.hexminiblocking = hexminiblocking;
 
 		this.events.emit("scene-awake");
 	}
 
-	/* START-USER-CODE */
+	private groundLayer!: Phaser.Tilemaps.TilemapLayer;
+	private collisionLayer!: Phaser.Tilemaps.TilemapLayer;
+	private player!: Player;
 
+	/* START-USER-CODE */
+    private hexminiblocking!: Phaser.Tilemaps.Tilemap;
+	private selectedTile!: Phaser.Tilemaps.Tile;
 	// Write your code here.
 
 	create() {
-
 		this.editorCreate();
+
+		this.groundLayer.setInteractive();
+		this.input.on('pointerup', (pointer: any) => {
+			console.log("Pointer Up " , pointer.worldX, pointer.worldY);
+			let tile: Phaser.Tilemaps.Tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+			if (tile) {
+				console.log("tile:", tile.x, tile.y);
+				let tileWorldPosition: Phaser.Math.Vector2 = this.groundLayer.tileToWorldXY(tile.x, tile.y);
+				console.log("tileWorldPosition", tileWorldPosition);
+				this.player.setMoveTarget(tileWorldPosition);
+			} else {
+				console.error("No tile at world position: ", pointer.worldX, pointer.worldY);
+			}
+		});
+
+		this.input.on('pointermove', (pointer: any) => {
+			let tempPoint: Phaser.Math.Vector2;
+			let tile: Phaser.Tilemaps.Tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+			if (tile) {
+				console.log("Pointermove tile: ", tile.x, tile.y);
+				let regularTint = tile.tint;
+				if (this.selectedTile) {
+					this.selectedTile.tint = regularTint;
+				}
+				this.selectedTile = tile;
+				this.selectedTile.tint = 0xff0000;
+			}
+			console.log("Pointermove: ", pointer.worldX, pointer.worldY);
+		});
 	}
 
 	/* END-USER-CODE */

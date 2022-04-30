@@ -23,6 +23,16 @@
                 "url": "assets/dino.png",
                 "type": "image",
                 "key": "dino"
+            },
+            {
+                "url": "assets/environments/hexmini.png",
+                "type": "image",
+                "key": "hexmini"
+            },
+            {
+                "url": "assets/environments/hexminiblocking.json",
+                "type": "tilemapTiledJSON",
+                "key": "hexminiblocking"
             }
         ]
     },

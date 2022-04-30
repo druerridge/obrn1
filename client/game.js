@@ -73,6 +73,8 @@ class UserComponent {
 }
 /// <reference path="./UserComponent.ts"/>
 /* START OF COMPILED CODE */
+/* START-USER-IMPORTS */
+/* END-USER-IMPORTS */
 class PreloadText extends UserComponent {
     constructor(gameObject) {
         super(gameObject);
@@ -94,6 +96,8 @@ class PreloadText extends UserComponent {
 /// <reference path="./UserComponent.ts"/>
 // You can write more code here
 /* START OF COMPILED CODE */
+/* START-USER-IMPORTS */
+/* END-USER-IMPORTS */
 class PushOnClick extends UserComponent {
     constructor(gameObject) {
         super(gameObject);
@@ -127,6 +131,7 @@ class PushOnClick extends UserComponent {
 class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x ?? 366, y ?? 169, texture || "black-mage", frame ?? 9);
+        this.setOrigin(0.5, 1);
         /* START-USER-CTR-CODE */
         // Write your code here.
         this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);
@@ -143,25 +148,13 @@ class Player extends Phaser.GameObjects.Sprite {
         arcade.add.existing(this);
     }
     updatePlayer() {
-        const arcadeBody = this.body;
-        var pointer = this.scene.input.activePointer;
-        if (pointer.isDown) {
-            this.moveTarget = new Phaser.Math.Vector2(pointer.x, pointer.y);
-            this.scene.physics.moveToObject(this, this.moveTarget, this.maxSpeed);
-            if (arcadeBody.velocity.y >= 0) {
-                this.play("walk-down");
-            }
-            else {
-                this.play("walk-up");
-            }
-            if (arcadeBody.velocity.x >= 0) {
-                this.setFlipX(true);
-            }
-            else {
-                this.setFlipX(false);
-            }
-        }
+        // var pointer = this.scene.input.activePointer;
+        // if (pointer.isDown) {
+        // 	let moveTargetVector: Phaser.Math.Vector2 = new Phaser.Math.Vector2(pointer.x, pointer.y);
+        // 	this.setMoveTarget(moveTargetVector);
+        // }
         var distance = this.moveTarget.distance(this);
+        const arcadeBody = this.body;
         if (arcadeBody.speed > 0) {
             if (distance < 4) {
                 if (arcadeBody.velocity.y >= 0) {
@@ -172,6 +165,23 @@ class Player extends Phaser.GameObjects.Sprite {
                 }
                 arcadeBody.reset(this.moveTarget.x, this.moveTarget.y);
             }
+        }
+    }
+    setMoveTarget(moveTargetVector) {
+        const arcadeBody = this.body;
+        this.moveTarget = moveTargetVector;
+        this.scene.physics.moveToObject(this, this.moveTarget, this.maxSpeed);
+        if (arcadeBody.velocity.y >= 0) {
+            this.play("walk-down");
+        }
+        else {
+            this.play("walk-up");
+        }
+        if (arcadeBody.velocity.x >= 0) {
+            this.setFlipX(true);
+        }
+        else {
+            this.setFlipX(false);
         }
     }
 }
@@ -187,10 +197,23 @@ class CharacterTest extends Phaser.Scene {
         /* END-USER-CTR-CODE */
     }
     editorCreate() {
+        // hexminiblocking
+        const hexminiblocking = this.add.tilemap("hexminiblocking");
+        hexminiblocking.addTilesetImage("hex mini", "hexmini");
+        hexminiblocking.addTilesetImage("hexmini", "hexmini");
+        // player
+        const player = new Player(this, 400, 300);
+        this.add.existing(player);
+        // ground_1
+        hexminiblocking.createLayer("Ground", ["hexmini"], 0, 0);
+        // collision_1
+        hexminiblocking.createLayer("Collision", ["hexmini"], 0, 0);
+        this.hexminiblocking = hexminiblocking;
         this.events.emit("scene-awake");
     }
     /* START-USER-CODE */
     // Write your code here
+    hexminiblocking;
     create() {
         this.editorCreate();
     }
@@ -207,26 +230,62 @@ class Level extends Phaser.Scene {
         /* END-USER-CTR-CODE */
     }
     editorCreate() {
-        // dino
-        const dino = this.add.image(400, 245.50984430371858, "dino");
-        // text_1
-        const text_1 = this.add.text(400, 406, "", {});
-        text_1.setOrigin(0.5, 0);
-        text_1.text = "Phaser 3 + Phaser Editor 2D + TypeScript";
-        text_1.setStyle({ "fontFamily": "arial", "fontSize": "3em" });
+        // hexminiblocking
+        const hexminiblocking = this.add.tilemap("hexminiblocking");
+        hexminiblocking.addTilesetImage("hex mini", "hexmini");
+        hexminiblocking.addTilesetImage("hexmini", "hexmini");
+        // groundLayer
+        const groundLayer = hexminiblocking.createLayer("Ground", ["hexmini"], 0, 0);
+        // collisionLayer
+        const collisionLayer = hexminiblocking.createLayer("Collision", ["hexmini"], 0, 0);
         // PlayerLayer
         const playerLayer = this.add.layer();
         // player
-        const player = new Player(this, 280, 249);
+        const player = new Player(this, 282, 227);
         playerLayer.add(player);
-        // dino (components)
-        new PushOnClick(dino);
+        this.groundLayer = groundLayer;
+        this.collisionLayer = collisionLayer;
+        this.player = player;
+        this.hexminiblocking = hexminiblocking;
         this.events.emit("scene-awake");
     }
+    groundLayer;
+    collisionLayer;
+    player;
     /* START-USER-CODE */
+    hexminiblocking;
+    selectedTile;
     // Write your code here.
     create() {
         this.editorCreate();
+        this.groundLayer.setInteractive();
+        this.input.on('pointerup', (pointer) => {
+            console.log("Pointer Up ", pointer.worldX, pointer.worldY);
+            let tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+            if (tile) {
+                console.log("tile:", tile.x, tile.y);
+                let tileWorldPosition = this.groundLayer.tileToWorldXY(tile.x, tile.y);
+                console.log("tileWorldPosition", tileWorldPosition);
+                this.player.setMoveTarget(tileWorldPosition);
+            }
+            else {
+                console.error("No tile at world position: ", pointer.worldX, pointer.worldY);
+            }
+        });
+        this.input.on('pointermove', (pointer) => {
+            let tempPoint;
+            let tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+            if (tile) {
+                console.log("Pointermove tile: ", tile.x, tile.y);
+                let regularTint = tile.tint;
+                if (this.selectedTile) {
+                    this.selectedTile.tint = regularTint;
+                }
+                this.selectedTile = tile;
+                this.selectedTile.tint = 0xff0000;
+            }
+            console.log("Pointermove: ", pointer.worldX, pointer.worldY);
+        });
     }
 }
 /* END OF COMPILED CODE */
@@ -249,7 +308,7 @@ class Preload extends Phaser.Scene {
         guapen.scaleX = 0.5915891440784282;
         guapen.scaleY = 0.5915891440784282;
         // progress
-        const progress = this.add.text(381.5, 335, "", {});
+        const progress = this.add.text(400, 349, "", {});
         progress.text = "0%";
         progress.setStyle({ "fontSize": "30px" });
         // progress (components)
