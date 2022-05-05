@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
 		physics: {
 			default: "arcade",
 			arcade: {
-				debug: false
+				debug: true
 			}
 		},
 		type: Phaser.AUTO,

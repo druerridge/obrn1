@@ -10,27 +10,25 @@
     "displayList": [
         {
             "type": "TilemapLayer",
-            "id": "4436f418-a6f7-4652-9918-30f9dc224c9a",
+            "id": "caa49861-09ba-48ac-8225-46a6666c24ef",
             "label": "groundLayer",
             "scope": "CLASS",
             "components": [],
-            "tilemapId": "5bb1ea20-c846-4adc-a2f2-5c1987e5254f",
+            "tilemapId": "0238ec59-865d-4bf0-89b6-11cf136222cd",
             "layerName": "Ground",
             "tilesets": [
-                "hex mini",
                 "hexmini"
             ]
         },
         {
             "type": "TilemapLayer",
-            "id": "32cc8991-fe74-4f0f-bbb6-18d32bc2e2d3",
+            "id": "f3907870-ae98-4365-af86-ece04778eaeb",
             "label": "collisionLayer",
             "scope": "CLASS",
             "components": [],
-            "tilemapId": "5bb1ea20-c846-4adc-a2f2-5c1987e5254f",
+            "tilemapId": "0238ec59-865d-4bf0-89b6-11cf136222cd",
             "layerName": "Collision",
             "tilesets": [
-                "hex mini",
                 "hexmini"
             ]
         },
@@ -58,15 +56,11 @@
     ],
     "plainObjects": [
         {
-            "id": "5bb1ea20-c846-4adc-a2f2-5c1987e5254f",
+            "id": "0238ec59-865d-4bf0-89b6-11cf136222cd",
             "type": "Tilemap",
-            "label": "hexminiblocking",
+            "label": "hexTileMap",
             "key": "hexminiblocking",
             "tilesets": [
-                {
-                    "name": "hex mini",
-                    "imageKey": "hexmini"
-                },
                 {
                     "name": "hexmini",
                     "imageKey": "hexmini"

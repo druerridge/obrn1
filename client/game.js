@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
         physics: {
             default: "arcade",
             arcade: {
-                debug: false
+                debug: true
             }
         },
         type: Phaser.AUTO,
@@ -126,6 +126,40 @@ class PushOnClick extends UserComponent {
 }
 /* END OF COMPILED CODE */
 // You can write more code here
+class DruTileMapLayer extends Phaser.Tilemaps.TilemapLayer {
+    // /**
+    //  *
+    //  * @param scene The Scene to which this Game Object belongs.
+    //  * @param tilemap The Tilemap this layer is a part of.
+    //  * @param layerIndex The index of the LayerData associated with this layer.
+    //  * @param tileset The tileset, or an array of tilesets, used to render this layer. Can be a string or a Tileset object.
+    //  * @param x The world x position where the top left of this layer will be placed. Default 0.
+    //  * @param y The world y position where the top left of this layer will be placed. Default 0.
+    //  */
+    // constructor(scene: Phaser.Scene, tilemap: Phaser.Tilemaps.Tilemap, layerIndex: number, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x?: number, y?: number)
+    // 	super(scene, tilemap, layerIndex, tileset, x, y);
+    // 	/* START-USER-CTR-CODE */
+    // 	// Write your code here.
+    // 	/* END-USER-CTR-CODE */
+    // }
+    /**
+ * Gets a tile at the given world coordinates from the given layer.
+ *
+ * @method Phaser.Tilemaps.TilemapLayer#getTileAtWorldXY
+ * @since 3.50.0
+ *
+ * @param {number} worldX - X position to get the tile from (given in pixels)
+ * @param {number} worldY - Y position to get the tile from (given in pixels)
+ * @param {boolean} [nonNull=false] - If true, function won't return null for empty tiles, but a Tile object with an index of -1.
+ * @param {Phaser.Cameras.Scene2D.Camera} [camera] - The Camera to use when calculating the tile index from the world values.
+ *
+ * @return {Phaser.Tilemaps.Tile} The tile at the given coordinates or null if no tile was found or the coordinates were invalid.
+ */
+    getTileAtWorldXY(worldX, worldY, nonNull, camera) {
+        console.log("I was here.");
+        return super.getTileAtWorldXY(worldX, worldY, nonNull, camera);
+    }
+}
 // You can write more code here
 /* START OF COMPILED CODE */
 class Player extends Phaser.GameObjects.Sprite {
@@ -230,14 +264,13 @@ class Level extends Phaser.Scene {
         /* END-USER-CTR-CODE */
     }
     editorCreate() {
-        // hexminiblocking
-        const hexminiblocking = this.add.tilemap("hexminiblocking");
-        hexminiblocking.addTilesetImage("hex mini", "hexmini");
-        hexminiblocking.addTilesetImage("hexmini", "hexmini");
+        // hexTileMap
+        const hexTileMap = this.add.tilemap("hexminiblocking");
+        hexTileMap.addTilesetImage("hexmini", "hexmini");
         // groundLayer
-        const groundLayer = hexminiblocking.createLayer("Ground", ["hexmini"], 0, 0);
+        const groundLayer = hexTileMap.createLayer("Ground", ["hexmini"], 0, 0);
         // collisionLayer
-        const collisionLayer = hexminiblocking.createLayer("Collision", ["hexmini"], 0, 0);
+        const collisionLayer = hexTileMap.createLayer("Collision", ["hexmini"], 0, 0);
         // PlayerLayer
         const playerLayer = this.add.layer();
         // player
@@ -246,25 +279,42 @@ class Level extends Phaser.Scene {
         this.groundLayer = groundLayer;
         this.collisionLayer = collisionLayer;
         this.player = player;
-        this.hexminiblocking = hexminiblocking;
+        this.hexTileMap = hexTileMap;
         this.events.emit("scene-awake");
     }
     groundLayer;
     collisionLayer;
     player;
     /* START-USER-CODE */
-    hexminiblocking;
     selectedTile;
+    hexTileMap;
     // Write your code here.
     create() {
         this.editorCreate();
+        this.collisionLayer.setCollisionByExclusion([-1], true);
+        this.physics.add.collider(this.player, this.collisionLayer);
+        this.physics.collide(this.player, this.collisionLayer);
+        this.groundLayer.tilemap.setLayer('Ground');
         this.groundLayer.setInteractive();
         this.input.on('pointerup', (pointer) => {
             console.log("Pointer Up ", pointer.worldX, pointer.worldY);
-            let tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+            console.log("hexTileMap\n");
+            console.log("\t format: " + this.hexTileMap.format);
+            console.log("\t orientation: " + this.hexTileMap.orientation);
+            console.log("\t hex orientation: " + Phaser.Tilemaps.Orientation.HEXAGONAL);
+            console.log("\t tile height: " + this.hexTileMap.tileHeight);
+            console.log("\t ileWidth: " + this.hexTileMap.tileWidth);
+            console.log("\t hexSideLength: " + this.hexTileMap.hexSideLength);
+            console.log("\t height: " + this.hexTileMap.height);
+            console.log("\t width: " + this.hexTileMap.width);
+            console.log("\t getTileLayerNames: " + this.hexTileMap.getTileLayerNames());
+            console.log("\t renderOrder: " + this.hexTileMap.renderOrder);
+            console.log("groundLayer: ");
+            console.log("\t layerIndex: " + this.groundLayer.layerIndex);
+            let tile = this.groundLayer.tilemap.getTileAtWorldXY(pointer.worldX, pointer.worldY);
             if (tile) {
                 console.log("tile:", tile.x, tile.y);
-                let tileWorldPosition = this.groundLayer.tileToWorldXY(tile.x, tile.y);
+                let tileWorldPosition = this.groundLayer.tilemap.tileToWorldXY(tile.x, tile.y);
                 console.log("tileWorldPosition", tileWorldPosition);
                 this.player.setMoveTarget(tileWorldPosition);
             }
@@ -274,9 +324,9 @@ class Level extends Phaser.Scene {
         });
         this.input.on('pointermove', (pointer) => {
             let tempPoint;
-            let tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+            let tile = this.groundLayer.tilemap.getTileAtWorldXY(pointer.worldX, pointer.worldY);
             if (tile) {
-                console.log("Pointermove tile: ", tile.x, tile.y);
+                // console.log("Pointermove tile: ", tile.x, tile.y);
                 let regularTint = tile.tint;
                 if (this.selectedTile) {
                     this.selectedTile.tint = regularTint;
@@ -284,7 +334,7 @@ class Level extends Phaser.Scene {
                 this.selectedTile = tile;
                 this.selectedTile.tint = 0xff0000;
             }
-            console.log("Pointermove: ", pointer.worldX, pointer.worldY);
+            // console.log("Pointermove: ", pointer.worldX, pointer.worldY);
         });
     }
 }

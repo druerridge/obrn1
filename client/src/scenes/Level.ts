@@ -15,16 +15,15 @@ class Level extends Phaser.Scene {
 
 	editorCreate(): void {
 
-		// hexminiblocking
-		const hexminiblocking = this.add.tilemap("hexminiblocking");
-		hexminiblocking.addTilesetImage("hex mini", "hexmini");
-		hexminiblocking.addTilesetImage("hexmini", "hexmini");
+		// hexTileMap
+		const hexTileMap = this.add.tilemap("hexminiblocking");
+		hexTileMap.addTilesetImage("hexmini", "hexmini");
 
 		// groundLayer
-		const groundLayer = hexminiblocking.createLayer("Ground", ["hexmini"], 0, 0);
+		const groundLayer = hexTileMap.createLayer("Ground", ["hexmini"], 0, 0);
 
 		// collisionLayer
-		const collisionLayer = hexminiblocking.createLayer("Collision", ["hexmini"], 0, 0);
+		const collisionLayer = hexTileMap.createLayer("Collision", ["hexmini"], 0, 0);
 
 		// PlayerLayer
 		const playerLayer = this.add.layer();
@@ -36,7 +35,7 @@ class Level extends Phaser.Scene {
 		this.groundLayer = groundLayer;
 		this.collisionLayer = collisionLayer;
 		this.player = player;
-		this.hexminiblocking = hexminiblocking;
+		this.hexTileMap = hexTileMap;
 
 		this.events.emit("scene-awake");
 	}
@@ -46,20 +45,39 @@ class Level extends Phaser.Scene {
 	private player!: Player;
 
 	/* START-USER-CODE */
-    private hexminiblocking!: Phaser.Tilemaps.Tilemap;
 	private selectedTile!: Phaser.Tilemaps.Tile;
+	private hexTileMap!: Phaser.Tilemaps.Tilemap;
 	// Write your code here.
 
 	create() {
 		this.editorCreate();
+		this.collisionLayer.setCollisionByExclusion([-1], true);
+		this.physics.add.collider(this.player, this.collisionLayer);
+		this.physics.collide(this.player, this.collisionLayer);
 
+		this.groundLayer.tilemap.setLayer('Ground');
 		this.groundLayer.setInteractive();
+
 		this.input.on('pointerup', (pointer: any) => {
 			console.log("Pointer Up " , pointer.worldX, pointer.worldY);
-			let tile: Phaser.Tilemaps.Tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+			console.log("hexTileMap\n");
+				console.log("\t format: " + this.hexTileMap.format);
+				console.log("\t orientation: " + this.hexTileMap.orientation);
+				console.log("\t hex orientation: " + Phaser.Tilemaps.Orientation.HEXAGONAL);
+				console.log("\t tile height: " + this.hexTileMap.tileHeight);
+				console.log("\t ileWidth: " + this.hexTileMap.tileWidth);
+				console.log("\t hexSideLength: " + this.hexTileMap.hexSideLength);
+				console.log("\t height: " + this.hexTileMap.height);
+				console.log("\t width: " + this.hexTileMap.width);
+				console.log("\t getTileLayerNames: " + this.hexTileMap.getTileLayerNames());
+				console.log("\t renderOrder: " + this.hexTileMap.renderOrder);
+			console.log("groundLayer: ");
+				console.log("\t layerIndex: " + this.groundLayer.layerIndex);
+
+			let tile: Phaser.Tilemaps.Tile = this.groundLayer.tilemap.getTileAtWorldXY(pointer.worldX, pointer.worldY);
 			if (tile) {
 				console.log("tile:", tile.x, tile.y);
-				let tileWorldPosition: Phaser.Math.Vector2 = this.groundLayer.tileToWorldXY(tile.x, tile.y);
+				let tileWorldPosition: Phaser.Math.Vector2 = this.groundLayer.tilemap.tileToWorldXY(tile.x, tile.y);
 				console.log("tileWorldPosition", tileWorldPosition);
 				this.player.setMoveTarget(tileWorldPosition);
 			} else {
@@ -69,9 +87,9 @@ class Level extends Phaser.Scene {
 
 		this.input.on('pointermove', (pointer: any) => {
 			let tempPoint: Phaser.Math.Vector2;
-			let tile: Phaser.Tilemaps.Tile = this.groundLayer.getTileAtWorldXY(pointer.worldX, pointer.worldY);
+			let tile: Phaser.Tilemaps.Tile = this.groundLayer.tilemap.getTileAtWorldXY(pointer.worldX, pointer.worldY);
 			if (tile) {
-				console.log("Pointermove tile: ", tile.x, tile.y);
+				// console.log("Pointermove tile: ", tile.x, tile.y);
 				let regularTint = tile.tint;
 				if (this.selectedTile) {
 					this.selectedTile.tint = regularTint;
@@ -79,7 +97,7 @@ class Level extends Phaser.Scene {
 				this.selectedTile = tile;
 				this.selectedTile.tint = 0xff0000;
 			}
-			console.log("Pointermove: ", pointer.worldX, pointer.worldY);
+			// console.log("Pointermove: ", pointer.worldX, pointer.worldY);
 		});
 	}
 
