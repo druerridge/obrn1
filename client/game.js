@@ -301,7 +301,10 @@ class Level extends Phaser.Scene {
                 // this.graphics.strokeRectShape(this.player.getBounds());
                 // console.log("Player Bounds:", playerArcadeBodyBounds);
                 // end debug
-                this.player.setMoveTarget(tileWorldPosition);
+                let destVec = new Phaser.Math.Vector2(tile.width * 0.5, tile.height * 0.5);
+                destVec.add(tileWorldPosition);
+                destVec.subtract(new Phaser.Math.Vector2(this.player.body.width * 0.5, this.player.body.height * 0.5));
+                this.player.setMoveTarget(destVec);
             }
             else {
                 console.error("No tile at world position: ", pointer.worldX, pointer.worldY);
