@@ -1,14 +1,20 @@
 "use strict";
 window.addEventListener('load', function () {
     var game = new Phaser.Game({
-        width: 800,
-        height: 600,
+        width: 400,
+        height: 300,
         physics: {
             default: "arcade",
             arcade: {
                 debug: true
             }
         },
+        // physics: {
+        // 	default: "matter",
+        // 	matter: {
+        // 		debug: true
+        // 	}
+        // },
         type: Phaser.AUTO,
         backgroundColor: "#242424",
         scale: {
@@ -126,48 +132,20 @@ class PushOnClick extends UserComponent {
 }
 /* END OF COMPILED CODE */
 // You can write more code here
-class DruTileMapLayer extends Phaser.Tilemaps.TilemapLayer {
-    // /**
-    //  *
-    //  * @param scene The Scene to which this Game Object belongs.
-    //  * @param tilemap The Tilemap this layer is a part of.
-    //  * @param layerIndex The index of the LayerData associated with this layer.
-    //  * @param tileset The tileset, or an array of tilesets, used to render this layer. Can be a string or a Tileset object.
-    //  * @param x The world x position where the top left of this layer will be placed. Default 0.
-    //  * @param y The world y position where the top left of this layer will be placed. Default 0.
-    //  */
-    // constructor(scene: Phaser.Scene, tilemap: Phaser.Tilemaps.Tilemap, layerIndex: number, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x?: number, y?: number)
-    // 	super(scene, tilemap, layerIndex, tileset, x, y);
-    // 	/* START-USER-CTR-CODE */
-    // 	// Write your code here.
-    // 	/* END-USER-CTR-CODE */
-    // }
-    /**
- * Gets a tile at the given world coordinates from the given layer.
- *
- * @method Phaser.Tilemaps.TilemapLayer#getTileAtWorldXY
- * @since 3.50.0
- *
- * @param {number} worldX - X position to get the tile from (given in pixels)
- * @param {number} worldY - Y position to get the tile from (given in pixels)
- * @param {boolean} [nonNull=false] - If true, function won't return null for empty tiles, but a Tile object with an index of -1.
- * @param {Phaser.Cameras.Scene2D.Camera} [camera] - The Camera to use when calculating the tile index from the world values.
- *
- * @return {Phaser.Tilemaps.Tile} The tile at the given coordinates or null if no tile was found or the coordinates were invalid.
- */
-    getTileAtWorldXY(worldX, worldY, nonNull, camera) {
-        console.log("I was here.");
-        return super.getTileAtWorldXY(worldX, worldY, nonNull, camera);
-    }
-}
 // You can write more code here
 /* START OF COMPILED CODE */
 class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x ?? 366, y ?? 169, texture || "black-mage", frame ?? 9);
-        this.setOrigin(0.5, 1);
+        this.scaleX = 0.5;
+        this.scaleY = 0.5;
         /* START-USER-CTR-CODE */
         // Write your code here.
+        const sceneArcadePhysics = this.scene.physics;
+        sceneArcadePhysics.add.existing(this);
+        const arcadeBody = this.body;
+        arcadeBody.setSize(this.width, this.height * 0.5, true);
+        arcadeBody.setOffset(0, this.height * 0.5);
         this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.updatePlayer, this);
         this.moveTarget = new Phaser.Math.Vector2(this.x, this.y);
@@ -178,15 +156,8 @@ class Player extends Phaser.GameObjects.Sprite {
     moveTarget;
     maxSpeed = 60;
     start() {
-        const arcade = this.scene.physics;
-        arcade.add.existing(this);
     }
     updatePlayer() {
-        // var pointer = this.scene.input.activePointer;
-        // if (pointer.isDown) {
-        // 	let moveTargetVector: Phaser.Math.Vector2 = new Phaser.Math.Vector2(pointer.x, pointer.y);
-        // 	this.setMoveTarget(moveTargetVector);
-        // }
         var distance = this.moveTarget.distance(this);
         const arcadeBody = this.body;
         if (arcadeBody.speed > 0) {
@@ -274,7 +245,7 @@ class Level extends Phaser.Scene {
         // PlayerLayer
         const playerLayer = this.add.layer();
         // player
-        const player = new Player(this, 282, 227);
+        const player = new Player(this, 118, 54);
         playerLayer.add(player);
         this.groundLayer = groundLayer;
         this.collisionLayer = collisionLayer;
@@ -288,9 +259,11 @@ class Level extends Phaser.Scene {
     /* START-USER-CODE */
     selectedTile;
     hexTileMap;
+    graphics;
     // Write your code here.
     create() {
         this.editorCreate();
+        this.graphics = this.add.graphics();
         this.collisionLayer.setCollisionByExclusion([-1], true);
         this.physics.add.collider(this.player, this.collisionLayer);
         this.physics.collide(this.player, this.collisionLayer);
@@ -303,7 +276,7 @@ class Level extends Phaser.Scene {
             console.log("\t orientation: " + this.hexTileMap.orientation);
             console.log("\t hex orientation: " + Phaser.Tilemaps.Orientation.HEXAGONAL);
             console.log("\t tile height: " + this.hexTileMap.tileHeight);
-            console.log("\t ileWidth: " + this.hexTileMap.tileWidth);
+            console.log("\t tileWidth: " + this.hexTileMap.tileWidth);
             console.log("\t hexSideLength: " + this.hexTileMap.hexSideLength);
             console.log("\t height: " + this.hexTileMap.height);
             console.log("\t width: " + this.hexTileMap.width);
@@ -316,6 +289,18 @@ class Level extends Phaser.Scene {
                 console.log("tile:", tile.x, tile.y);
                 let tileWorldPosition = this.groundLayer.tilemap.tileToWorldXY(tile.x, tile.y);
                 console.log("tileWorldPosition", tileWorldPosition);
+                // start debug
+                // this.graphics.clear();
+                // this.graphics.lineStyle(3, 0xff0000, 1);
+                // let tileBounds: any = tile.getBounds();
+                // this.graphics.strokeRectShape(tileBounds);
+                // console.log("Tile Bounds:", tileBounds);
+                // const playerArcadeBody = (this.player.body as Phaser.Physics.Arcade.Body);
+                // const playerArcadeBodyBounds: any = {};
+                // playerArcadeBody.getBounds(playerArcadeBodyBounds);
+                // this.graphics.strokeRectShape(this.player.getBounds());
+                // console.log("Player Bounds:", playerArcadeBodyBounds);
+                // end debug
                 this.player.setMoveTarget(tileWorldPosition);
             }
             else {

@@ -9,17 +9,27 @@
     },
     "displayList": [
         {
-            "type": "Sprite",
-            "id": "fc43a30b-4d44-4ed9-adbd-16c09b74d790",
-            "label": "sprite_1",
+            "type": "Container",
+            "id": "b8071bc0-2000-4eb2-8b47-5346ae68065b",
+            "label": "container_1",
             "components": [],
-            "texture": {
-                "key": "black-mage",
-                "frame": 9
-            },
             "x": 366,
             "y": 169,
-            "originY": 1
+            "list": [
+                {
+                    "type": "Sprite",
+                    "id": "fc43a30b-4d44-4ed9-adbd-16c09b74d790",
+                    "label": "sprite_1",
+                    "components": [],
+                    "texture": {
+                        "key": "black-mage",
+                        "frame": 9
+                    },
+                    "scaleX": 0.5,
+                    "scaleY": 0.5,
+                    "originY": 1
+                }
+            ]
         }
     ],
     "plainObjects": [],

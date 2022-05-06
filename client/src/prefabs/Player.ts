@@ -8,10 +8,17 @@ class Player extends Phaser.GameObjects.Sprite {
 	constructor(scene: Phaser.Scene, x?: number, y?: number, texture?: string, frame?: number | string) {
 		super(scene, x ?? 366, y ?? 169, texture || "black-mage", frame ?? 9);
 
-		this.setOrigin(0.5, 1);
+		this.scaleX = 0.5;
+		this.scaleY = 0.5;
 
 		/* START-USER-CTR-CODE */
 		// Write your code here.
+		const sceneArcadePhysics = this.scene.physics as Phaser.Physics.Arcade.ArcadePhysics;
+		sceneArcadePhysics.add.existing(this);
+		const arcadeBody = (this.body as Phaser.Physics.Arcade.Body);
+		arcadeBody.setSize(this.width, this.height * 0.5, true);
+		arcadeBody.setOffset(0, this.height * 0.5);
+
 		this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);
 		this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.updatePlayer, this);
 		this.moveTarget = new Phaser.Math.Vector2(this.x, this.y);
@@ -25,20 +32,13 @@ class Player extends Phaser.GameObjects.Sprite {
 	private maxSpeed: number = 60;
 
 	start() {
-		const arcade = this.scene.physics as Phaser.Physics.Arcade.ArcadePhysics;
-		arcade.add.existing(this);
+
 	}
 
 	updatePlayer() {
-		// var pointer = this.scene.input.activePointer;
-		// if (pointer.isDown) {
-		// 	let moveTargetVector: Phaser.Math.Vector2 = new Phaser.Math.Vector2(pointer.x, pointer.y);
-		// 	this.setMoveTarget(moveTargetVector);
-		// }
 		var distance = this.moveTarget.distance(this);
 
 		const arcadeBody = (this.body as Phaser.Physics.Arcade.Body);
-
 		if (arcadeBody.speed > 0)
 		{
 			if (distance < 4)

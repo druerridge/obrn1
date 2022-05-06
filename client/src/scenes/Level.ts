@@ -29,7 +29,7 @@ class Level extends Phaser.Scene {
 		const playerLayer = this.add.layer();
 
 		// player
-		const player = new Player(this, 282, 227);
+		const player = new Player(this, 118, 54);
 		playerLayer.add(player);
 
 		this.groundLayer = groundLayer;
@@ -47,10 +47,12 @@ class Level extends Phaser.Scene {
 	/* START-USER-CODE */
 	private selectedTile!: Phaser.Tilemaps.Tile;
 	private hexTileMap!: Phaser.Tilemaps.Tilemap;
+	private graphics!: Phaser.GameObjects.Graphics;
 	// Write your code here.
 
 	create() {
 		this.editorCreate();
+		this.graphics = this.add.graphics();
 		this.collisionLayer.setCollisionByExclusion([-1], true);
 		this.physics.add.collider(this.player, this.collisionLayer);
 		this.physics.collide(this.player, this.collisionLayer);
@@ -65,7 +67,7 @@ class Level extends Phaser.Scene {
 				console.log("\t orientation: " + this.hexTileMap.orientation);
 				console.log("\t hex orientation: " + Phaser.Tilemaps.Orientation.HEXAGONAL);
 				console.log("\t tile height: " + this.hexTileMap.tileHeight);
-				console.log("\t ileWidth: " + this.hexTileMap.tileWidth);
+				console.log("\t tileWidth: " + this.hexTileMap.tileWidth);
 				console.log("\t hexSideLength: " + this.hexTileMap.hexSideLength);
 				console.log("\t height: " + this.hexTileMap.height);
 				console.log("\t width: " + this.hexTileMap.width);
@@ -79,6 +81,22 @@ class Level extends Phaser.Scene {
 				console.log("tile:", tile.x, tile.y);
 				let tileWorldPosition: Phaser.Math.Vector2 = this.groundLayer.tilemap.tileToWorldXY(tile.x, tile.y);
 				console.log("tileWorldPosition", tileWorldPosition);
+
+				// start debug
+
+				// this.graphics.clear();
+				// this.graphics.lineStyle(3, 0xff0000, 1);
+				// let tileBounds: any = tile.getBounds();
+				// this.graphics.strokeRectShape(tileBounds);
+				// console.log("Tile Bounds:", tileBounds);
+				// const playerArcadeBody = (this.player.body as Phaser.Physics.Arcade.Body);
+				// const playerArcadeBodyBounds: any = {};
+				// playerArcadeBody.getBounds(playerArcadeBodyBounds);
+				// this.graphics.strokeRectShape(this.player.getBounds());
+				// console.log("Player Bounds:", playerArcadeBodyBounds);
+
+				// end debug
+
 				this.player.setMoveTarget(tileWorldPosition);
 			} else {
 				console.error("No tile at world position: ", pointer.worldX, pointer.worldY);
