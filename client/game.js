@@ -152,7 +152,7 @@ class Player extends Phaser.GameObjects.Sprite {
         const arcadeBody = this.body;
         if (arcadeBody.speed > 0) {
             if (distance < this.maxSpeed * this.scene.game.loop.delta * 0.001) {
-                this.setPosition(this.moveTarget.x, this.moveTarget.y);
+                // this.setPosition(this.moveTarget.x, this.moveTarget.y);
                 let yVelocitySquared = arcadeBody.velocity.y * arcadeBody.velocity.y;
                 let xVelocitySquared = arcadeBody.velocity.x * arcadeBody.velocity.x;
                 if (yVelocitySquared > xVelocitySquared) {
