@@ -268,11 +268,16 @@ class Level extends Phaser.Scene {
                 {
                     name: 'PlayerStart',
                     // @ts-ignore
-                    classType: Player
+                    classType: Player,
+                    key: 'ff1-characters',
+                    frame: 116
                 }
             ]);
             players.forEach((player) => {
-                player.setScale(4.0);
+                let scale = 4.0;
+                player.setScale(scale);
+                player.setX(player.x * scale);
+                player.setY(player.y * scale);
                 characters.push(player);
                 this.myPlayer = player;
             });
