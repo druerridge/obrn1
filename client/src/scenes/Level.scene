@@ -7,63 +7,17 @@
         "sceneKey": "Level",
         "compilerOutputLanguage": "TYPE_SCRIPT"
     },
-    "displayList": [
-        {
-            "type": "TilemapLayer",
-            "id": "caa49861-09ba-48ac-8225-46a6666c24ef",
-            "label": "groundLayer",
-            "scope": "CLASS",
-            "components": [],
-            "tilemapId": "0238ec59-865d-4bf0-89b6-11cf136222cd",
-            "layerName": "Ground",
-            "tilesets": [
-                "hexmini"
-            ]
-        },
-        {
-            "type": "TilemapLayer",
-            "id": "f3907870-ae98-4365-af86-ece04778eaeb",
-            "label": "collisionLayer",
-            "scope": "CLASS",
-            "components": [],
-            "tilemapId": "0238ec59-865d-4bf0-89b6-11cf136222cd",
-            "layerName": "Collision",
-            "tilesets": [
-                "hexmini"
-            ]
-        },
-        {
-            "type": "Layer",
-            "id": "f713ce72-b039-4d25-b80c-feaa9fbdc655",
-            "label": "PlayerLayer",
-            "components": [],
-            "list": [
-                {
-                    "prefabId": "da95aaad-b84f-4969-b49e-31c7dce3d116",
-                    "id": "68862dab-1f30-4192-9c98-23cb3bf9c056",
-                    "unlock": [
-                        "x",
-                        "y"
-                    ],
-                    "label": "player",
-                    "scope": "CLASS",
-                    "components": [],
-                    "x": 118,
-                    "y": 54
-                }
-            ]
-        }
-    ],
+    "displayList": [],
     "plainObjects": [
         {
-            "id": "0238ec59-865d-4bf0-89b6-11cf136222cd",
+            "id": "1abbd0f4-bcfe-416b-b1aa-c6de3e2627e9",
             "type": "Tilemap",
-            "label": "hexTileMap",
-            "key": "hexminiblocking",
+            "label": "tilemap",
+            "key": "ff1r-ortho",
             "tilesets": [
                 {
-                    "name": "hexmini",
-                    "imageKey": "hexmini"
+                    "name": "tile052",
+                    "imageKey": "tile052"
                 }
             ]
         }

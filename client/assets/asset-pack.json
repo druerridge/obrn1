@@ -2,37 +2,37 @@
     "section1": {
         "files": [
             {
-                "url": "assets/characters/black-mage.png",
-                "frameConfig": {
-                    "frameWidth": 16,
-                    "frameHeight": 32,
-                    "startFrame": 0,
-                    "endFrame": -1,
-                    "spacing": 0,
-                    "margin": 0
-                },
-                "type": "spritesheet",
-                "key": "black-mage"
-            },
-            {
-                "url": "assets/characters/black-mage.json",
-                "type": "animation",
-                "key": "black-mage"
-            },
-            {
                 "url": "assets/dino.png",
                 "type": "image",
                 "key": "dino"
             },
             {
-                "url": "assets/environments/hexmini.png",
-                "type": "image",
-                "key": "hexmini"
+                "url": "assets/characters/ff1-characters.png",
+                "frameConfig": {
+                    "frameWidth": 16,
+                    "frameHeight": 16,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 4,
+                    "margin": 4
+                },
+                "type": "spritesheet",
+                "key": "ff1-characters"
             },
             {
-                "url": "assets/environments/hexminiblocking.json",
+                "url": "assets/characters/ff1-characters.json",
+                "type": "animation",
+                "key": "ff1-characters"
+            },
+            {
+                "url": "assets/environments/ff1r-ortho.json",
                 "type": "tilemapTiledJSON",
-                "key": "hexminiblocking"
+                "key": "ff1r-ortho"
+            },
+            {
+                "url": "assets/environments/tile052.png",
+                "type": "image",
+                "key": "tile052"
             }
         ]
     },

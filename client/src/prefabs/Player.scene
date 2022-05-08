@@ -22,11 +22,11 @@
                     "label": "sprite_1",
                     "components": [],
                     "texture": {
-                        "key": "black-mage",
-                        "frame": 9
+                        "key": "ff1-characters",
+                        "frame": 116
                     },
-                    "scaleX": 0.5,
-                    "scaleY": 0.5,
+                    "scaleX": 4,
+                    "scaleY": 4,
                     "originY": 1
                 }
             ]

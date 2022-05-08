@@ -1,0 +1,177 @@
+{
+    "anims": [
+        {
+            "key": "black-walk-left",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 112,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "ff1-characters",
+                    "frame": 113,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-walk-down",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 110,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "ff1-characters",
+                    "frame": 111,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-walk-up",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 114,
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "ff1-characters",
+                    "frame": 115,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-death",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 119,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-channel-down",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 125,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-channel-up",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 127,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-channel-left",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 122,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-idle-down",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 116,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-idle-left",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 112,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "black-idle-up",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "ff1-characters",
+                    "frame": 115,
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 8,
+            "skipMissedFrames": true,
+            "repeat": -1
+        }
+    ],
+    "globalTimeScale": 1,
+    "meta": {
+        "app": "Phaser Editor 2D v3",
+        "contentType": "Phaser v3 Animations"
+    }
+}

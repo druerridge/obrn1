@@ -1,20 +1,14 @@
 window.addEventListener('load', function () {
 
 	var game = new Phaser.Game({
-		width: 400,
-		height: 300,
+		width: 960,
+		height: 540,
 		physics: {
 			default: "arcade",
 			arcade: {
 				debug: true
 			}
 		},
-		// physics: {
-		// 	default: "matter",
-		// 	matter: {
-		// 		debug: true
-		// 	}
-		// },
 		type: Phaser.AUTO,
         backgroundColor: "#242424",
 		scale: {
