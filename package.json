@@ -18,5 +18,6 @@
     "watch-client": "cd client && npm run watch"
   },
   "author": "Dru Erridge",
+  "type": "module",
   "license": ""
 }
