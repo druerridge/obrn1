@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import geckos, { GeckosServer, ServerChannel, Data } from '@geckos.io/server';
+import { ServerGameMetaData } from "./Interfaces";
 
 export default class ObrnGame extends Phaser.Game {
     private readonly port: number;
@@ -9,6 +10,12 @@ export default class ObrnGame extends Phaser.Game {
     {
         super(GameConfig);
         this.port = port;
+    }
+
+    getMetadata(): ServerGameMetaData {
+        return {
+            port: this.port
+        };
     }
 
     start() {

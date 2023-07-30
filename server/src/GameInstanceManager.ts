@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import ObrnGame from "./ObrnGame.js";
 
 export default class GameInstanceManager {
-    private readonly instances: { [key: string]: ObrnGame };
+    private readonly instances: Map<string, ObrnGame>;
 
     private static PHASER_GAME_CONFIG: Phaser.Types.Core.GameConfig = {
         width: 960,
@@ -21,24 +21,24 @@ export default class GameInstanceManager {
         }
     };
 
-    constructor(instances: { [key: string]: ObrnGame }) {
+    constructor(instances: Map<string, ObrnGame>) {
         this.instances = instances;
     }
 
     createInstance(): ObrnGame {
-        let port: number = Math.random() * 10000 + 50000;
+        let port: number = Math.floor(Math.random() * 10000) + 50000;
         return new ObrnGame(port, GameInstanceManager.PHASER_GAME_CONFIG);
     }
 
     addInstance(roomId:string, gameInstance: ObrnGame) {
-        this.instances[roomId] = gameInstance;
+        this.instances.set(roomId, gameInstance);
     }
 
-    getInstance(key:string): ObrnGame {
-        return this.instances[key];
+    getInstance(key:string): ObrnGame | undefined {
+        return this.instances.get(key);
     }
 
-    debugGetInstances(): { [key: string]: ObrnGame } {
+    debugGetInstances(): Map<string, ObrnGame> {
         return this.instances;
     }
 }

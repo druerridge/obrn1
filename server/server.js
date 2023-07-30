@@ -17,7 +17,7 @@ app.get('/debug/getGames', (req, res) => {
 });
 app.get('/debug/newGame', (req, res) => {
     let gameInstance = gameInstanceManager.createInstance();
-    let roomId = (Math.random() * 899 + 100).toString();
+    let roomId = Math.floor((Math.random() * 899 + 100)).toString();
     gameInstanceManager.addInstance(roomId, gameInstance);
     gameInstance.start();
     res.status(200).json({ roomId: roomId });

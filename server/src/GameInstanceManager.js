@@ -6,7 +6,7 @@ export default class GameInstanceManager {
         this.instances = instances;
     }
     createInstance() {
-        let port = Math.random() * 10000 + 50000;
+        let port = Math.floor(Math.random() * 10000) + 50000;
         return new ObrnGame(port, GameInstanceManager.PHASER_GAME_CONFIG);
     }
     addInstance(roomId, gameInstance) {
